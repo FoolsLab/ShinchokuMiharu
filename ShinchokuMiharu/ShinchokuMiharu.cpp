@@ -44,6 +44,9 @@ class MonitorManager {
         }
         return monitors[index];
     }
+    auto getMonitor(const size_t index) const{
+        return monitors[index];
+    }
 };
 
 int main(void) {
