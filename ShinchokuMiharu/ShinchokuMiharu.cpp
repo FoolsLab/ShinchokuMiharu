@@ -18,7 +18,7 @@ struct Monitor {
     Point origin;
     Size size;
     Scale scale;
-    bool isCoordInMonitor(Point pos) const {
+    bool isCoordInMonitor(const Point pos) const {
         return origin.x <= pos.x && pos.x < origin.x + size.x &&
                origin.y <= pos.y && pos.y < origin.y + size.y;
     }
@@ -28,7 +28,7 @@ class MonitorManager {
     std::vector<Monitor> monitors;
 
   public:
-    int getMonitorIndexFromCoord(Point pos) const {
+    int getMonitorIndexFromCoord(const Point pos) const {
         for (int i = 0; const auto &monitor : monitors) {
             if (monitor.isCoordInMonitor(pos)) {
                 return i;
@@ -36,6 +36,13 @@ class MonitorManager {
             i++;
         }
         return -1;
+    }
+    auto getMonitorFromCoord(const Point pos) const {
+        int index = getMonitorIndexFromCoord(pos);
+        if (index == -1) {
+            throw std::exception("monitor get error");
+        }
+        return monitors[index];
     }
 };
 
