@@ -6,8 +6,13 @@
 
 template <class T> struct Vec2 {
     T x, y;
-    bool operator==(Vec2 &o) { return x == o.x && y == o.y; }
-    bool operator!=(Vec2 &o) { return !((*this) != o); }
+    bool operator==(Vec2 &o) const { return x == o.x && y == o.y; }
+    bool operator!=(Vec2 &o) const { return !((*this) != o); }
+
+    template <class T2> Vec2<T> &operator=(const Vec2<T2> &o) {
+        x = T(o.x);
+        y = T(o.y);
+    }
 };
 
 using Point = Vec2<float>;
@@ -44,12 +49,28 @@ class MonitorManager {
         }
         return monitors[index];
     }
-    auto getMonitor(const size_t index) const{
-        return monitors[index];
-    }
+    auto getMonitor(const size_t index) const { return monitors[index]; }
 };
 
+class Window {
+    GLFWwindow *window;
 
+    Point wPos;
+
+  public:
+    void update() {
+        Vec2<double> tmpCPos;
+        Vec2<int> tmpWPos;
+        glfwGetCursorPos(window, &tmpCPos.x, &tmpCPos.y);
+        glfwGetWindowPos(window, &tmpWPos.x, &tmpWPos.y);
+        wPos = tmpWPos;
+    }
+
+    void setWindowPos(Point newPos) {
+        glfwSetWindowPos(window, newPos.x, newPos.y);
+        wPos = newPos;
+    }
+};
 
 int main(void) {
     GLFWwindow *window;
