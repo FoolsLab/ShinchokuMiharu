@@ -1,8 +1,7 @@
 ﻿cmake_minimum_required (VERSION 3.16)
 
 set (SRC_FILES 
-	"ShinchokuMiharu.cpp"
-	"ShinchokuMiharu.h"
+	"main.cpp"
 )
 
 add_executable (Miharu ${SRC_FILES})
