@@ -15,7 +15,7 @@ add_executable (ShinchokuMiharu ${SRC_FILES})
 if(WIN32)
 	# show console if debug
 	set_property(TARGET ShinchokuMiharu PROPERTY WIN32_EXECUTABLE $<NOT:$<CONFIG:Debug>>)
-	set_property(TARGET myproject PROPERTY VS_DPI_AWARE "PerMonitor")
+	set_property(TARGET ShinchokuMiharu PROPERTY VS_DPI_AWARE "PerMonitor")
 endif()
 
 find_package(OpenGL REQUIRED)
