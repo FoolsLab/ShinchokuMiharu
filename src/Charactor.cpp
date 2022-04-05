@@ -9,5 +9,8 @@ Charactor::~Charactor() {}
 void Charactor::update() {}
 
 void Charactor::draw() {
-    tex1.Draw({0,0});
+    glClearColor(0,0,0,0.5);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    tex1.Draw({100,150});
 }
