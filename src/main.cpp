@@ -70,6 +70,15 @@ class Window {
     Point wPos;
 
   public:
+    Window() {
+        window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+        if (!window) {
+            throw std::exception("Window creation error");
+        }
+    }
+
+    bool CloseRequested() { return glfwWindowShouldClose(window) != 0; }
+
     void update() {
         Vec2<int> tmpWPos;
         glfwGetWindowPos(window, &tmpWPos.x, &tmpWPos.y);
@@ -88,6 +97,12 @@ class Window {
         wPos = newPos;
     }
     auto getWindowPos() const { return wPos; }
+
+    void renderBegin() {
+        glfwMakeContextCurrent(window);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+    void renderEnd() { glfwSwapBuffers(window); }
 };
 
 class GLFWManager {
@@ -98,6 +113,7 @@ class GLFWManager {
         }
     }
     ~GLFWManager() { glfwTerminate(); }
+    void update() { glfwPollEvents(); }
 };
 
 class System {
@@ -113,10 +129,16 @@ class System {
 
   public:
     void update() {
+        glfwManager.update();
         mainWindow.update();
         updateCursourPos();
+
+        mainWindow.renderBegin();
+        mainWindow.renderEnd();
     }
     auto getCursorPos() const { return cursorPos; }
+
+    bool shouldExit() { return mainWindow.CloseRequested(); }
 
     System() {}
     ~System() {}
@@ -126,20 +148,8 @@ int main(void) {
     try {
         System sys;
 
-        GLFWwindow *window;
-
-        window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-        if (!window) {
-            glfwTerminate();
-            return -1;
-        }
-
-        glfwMakeContextCurrent(window);
-
-        while (!glfwWindowShouldClose(window)) {
-            glClear(GL_COLOR_BUFFER_BIT);
-            glfwSwapBuffers(window);
-            glfwPollEvents();
+        while (!sys.shouldExit()) {
+            sys.update();
         }
     } catch (std::exception e) {
         std::cerr << e.what() << std::endl;
