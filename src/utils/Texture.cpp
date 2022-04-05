@@ -38,6 +38,12 @@ void Texture::Draw(const Point dst, const Point src, const Size srcRect) {
     glBindTexture(GL_TEXTURE_2D, texName);
 
     glLoadIdentity();
+
+    Size wSize(640, 480);
+
+    glTranslatef(-1.0f, 1.0f, 0.0f);
+    glScalef(size.x / wSize.x, size.y / wSize.y, 1.0f);
+    glTranslatef(1.0f + dst.x * 2 / size.x, -1.0f - dst.y * 2 / size.y, 0.0f);
     glVertexPointer(2, GL_FLOAT, 0, vertex);
     glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
 
