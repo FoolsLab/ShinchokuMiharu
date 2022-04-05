@@ -9,9 +9,23 @@ template <class T> struct Vec2 {
     bool operator==(Vec2 &o) const { return x == o.x && y == o.y; }
     bool operator!=(Vec2 &o) const { return !((*this) != o); }
 
+    Vec2() : x(0), y(0) {}
+    Vec2(T _x, T _y) : x(_x), y(_y) {}
     template <class T2> Vec2<T> &operator=(const Vec2<T2> &o) {
         x = T(o.x);
         y = T(o.y);
+    }
+    template <class T2> Vec2(const Vec2<T2> &o) { (*this) = o; }
+
+    template <class T2> auto &operator+=(const Vec2<T2> &o) {
+        x += o.x;
+        y += o.y;
+        return (*this);
+    }
+    template <class T2> auto operator+(const Vec2<T2> &o) {
+        Vec2<decltype(this->x + o.x)> tmp = (*this);
+        tmp += o;
+        return tmp;
     }
 };
 
@@ -59,17 +73,39 @@ class Window {
 
   public:
     void update() {
-        Vec2<double> tmpCPos;
         Vec2<int> tmpWPos;
-        glfwGetCursorPos(window, &tmpCPos.x, &tmpCPos.y);
         glfwGetWindowPos(window, &tmpWPos.x, &tmpWPos.y);
         wPos = tmpWPos;
+    }
+
+    auto getCursorPos() const {
+        Vec2<double> tmpCPos;
+        glfwGetCursorPos(window, &tmpCPos.x, &tmpCPos.y);
+
+        return Point(tmpCPos);
     }
 
     void setWindowPos(Point newPos) {
         glfwSetWindowPos(window, newPos.x, newPos.y);
         wPos = newPos;
     }
+    auto getWindowPos() const { return wPos; }
+};
+
+class System {
+    Window mainWindow;
+    Point cursorPos;
+
+    void updateCursourPos() {
+        cursorPos = mainWindow.getCursorPos() + mainWindow.getWindowPos();
+    }
+
+  public:
+    void update() {
+        mainWindow.update();
+        updateCursourPos();
+    }
+    auto getCursorPos() const { return cursorPos; }
 };
 
 int main(void) {
