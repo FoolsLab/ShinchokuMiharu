@@ -90,7 +90,18 @@ class Window {
     auto getWindowPos() const { return wPos; }
 };
 
+class GLFWManager {
+  public:
+    GLFWManager() {
+        if (!glfwInit()) {
+            throw std::exception("GLFW initialize error");
+        }
+    }
+    ~GLFWManager() { glfwTerminate(); }
+};
+
 class System {
+    GLFWManager glfwManager;
     Window mainWindow;
     Point cursorPos;
 
@@ -107,12 +118,8 @@ class System {
     }
     auto getCursorPos() const { return cursorPos; }
 
-    System() {
-        if (!glfwInit()) {
-            throw std::exception("GLFW initialize error");
-        }
-    }
-    ~System() { glfwTerminate(); }
+    System() {}
+    ~System() {}
 };
 
 int main(void) {
