@@ -2,8 +2,10 @@
 #include <gl/GL.h>
 #include <stb_image.h>
 
-#include "utils/utils.hpp"
+#include <iostream>
 #include <vector>
+
+#include "utils/utils.hpp"
 
 struct Monitor {
     Point origin;
@@ -104,28 +106,37 @@ class System {
         updateCursourPos();
     }
     auto getCursorPos() const { return cursorPos; }
+
+    System() {
+        if (!glfwInit()) {
+            throw std::exception("GLFW initialize error");
+        }
+    }
+    ~System() { glfwTerminate(); }
 };
 
 int main(void) {
-    GLFWwindow *window;
+    try {
+        System sys;
 
-    if (!glfwInit())
-        return -1;
+        GLFWwindow *window;
 
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window) {
-        glfwTerminate();
-        return -1;
+        window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+        if (!window) {
+            glfwTerminate();
+            return -1;
+        }
+
+        glfwMakeContextCurrent(window);
+
+        while (!glfwWindowShouldClose(window)) {
+            glClear(GL_COLOR_BUFFER_BIT);
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        }
+    } catch (std::exception e) {
+        std::cerr << e.what() << std::endl;
     }
 
-    glfwMakeContextCurrent(window);
-
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
     return 0;
 }
