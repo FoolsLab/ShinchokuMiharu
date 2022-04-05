@@ -3,4 +3,4 @@
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 
 project ("ShinchokuMiharu")
-add_subdirectory ("ShinchokuMiharu")
+add_subdirectory ("src")
