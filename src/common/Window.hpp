@@ -26,7 +26,7 @@ class Window {
         glfwShowWindow(window);
     }
 
-    bool CloseRequested() { return glfwWindowShouldClose(window) != 0; }
+    bool CloseRequested() const { return glfwWindowShouldClose(window) != 0; }
 
     void update() {
         Vec2<int> tmpWPos;
@@ -47,9 +47,9 @@ class Window {
     }
     auto getWindowPos() const { return wPos; }
 
-    void renderBegin() {
+    void renderBegin() const {
         glfwMakeContextCurrent(window);
         glClear(GL_COLOR_BUFFER_BIT);
     }
-    void renderEnd() { glfwSwapBuffers(window); }
+    void renderEnd() const { glfwSwapBuffers(window); }
 };
