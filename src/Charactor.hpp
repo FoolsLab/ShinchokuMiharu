@@ -9,6 +9,8 @@ class Charactor {
     const Window *mainWindow;
     Texture tex1;
 
+    void setWindowPos(Point);
+    void setWindowSize(Size);
   public:
     Charactor(const Window *_mainWindow);
     ~Charactor();
