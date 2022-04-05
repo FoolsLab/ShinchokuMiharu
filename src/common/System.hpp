@@ -24,8 +24,6 @@ class System {
 
     MonitorManager monitorManager;
 
-    Charactor charactor;
-
     void updateCursourPos() {
         cursorPos = mainWindow.getCursorPos() + mainWindow.getWindowPos();
     }
@@ -35,18 +33,9 @@ class System {
         glfwManager.update();
         mainWindow.update();
         updateCursourPos();
-
-        charactor.update();
-
-        // start render
-        mainWindow.renderBegin();
-
-        charactor.draw();
-
-        mainWindow.renderEnd();
-        // end render
     }
     auto getCursorPos() const { return cursorPos; }
+    auto& getWindow() const { return mainWindow; }
 
     bool shouldExit() { return mainWindow.CloseRequested(); }
 
