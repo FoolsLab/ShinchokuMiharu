@@ -30,13 +30,8 @@ class Window {
     bool CloseRequested() const { return glfwWindowShouldClose(window) != 0; }
 
     void update() {
-        Vec2<int> tmpWPos;
-        glfwGetWindowPos(window, &tmpWPos.x, &tmpWPos.y);
-        wPos = tmpWPos;
-        
-        Vec2<int> tmpWSize;
-        glfwGetWindowSize(window, &tmpWSize.x, &tmpWSize.y);
-        wSize = tmpWSize;
+        wPos = getWindowPos();
+        wSize = getWindowSize();
     }
 
     auto getCursorPos() const {
@@ -46,17 +41,23 @@ class Window {
         return Point(tmpCPos);
     }
 
-    void setWindowPos(Point newPos) {
+    void setWindowPos(Point newPos) const {
         glfwSetWindowPos(window, newPos.x, newPos.y);
-        wPos = newPos;
     }
-    auto getWindowPos() const { return wPos; }
-    
-    void setWindowSize(Size newSize) {
+    Point getWindowPos() const {
+        Vec2<int> tmpWPos;
+        glfwGetWindowPos(window, &tmpWPos.x, &tmpWPos.y);
+        return Point(tmpWPos);
+    }
+
+    void setWindowSize(Size newSize) const {
         glfwSetWindowSize(window, newSize.x, newSize.y);
-        wSize = newSize;
     }
-    auto getWindowSize() const { return wSize; }
+    Size getWindowSize() const {
+        Vec2<int> tmpWSize;
+        glfwGetWindowSize(window, &tmpWSize.x, &tmpWSize.y);
+        return Size(tmpWSize);
+    }
 
     void renderBegin() const {
         glfwMakeContextCurrent(window);
