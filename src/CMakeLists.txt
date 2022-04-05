@@ -3,6 +3,8 @@
 set (SRC_FILES 
 	"main.cpp"
 	"Charactor.cpp"
+	"utils/Texture.cpp"
+	"stb_impl.cpp"
 )
 
 add_executable (Miharu ${SRC_FILES})

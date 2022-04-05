@@ -1,12 +1,15 @@
 #pragma once
 
-class Charactor
-{
-private:
-public:
-  Charactor();
-  ~Charactor();
+#include "utils/Texture.hpp"
 
-  void update();
-  void draw();
+class Charactor {
+  private:
+    Texture tex1;
+
+  public:
+    Charactor();
+    ~Charactor();
+
+    void update();
+    void draw();
 };
