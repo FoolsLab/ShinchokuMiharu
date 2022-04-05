@@ -1,9 +1,10 @@
 #pragma once
 
-#include <exception>
-#include <GLFW/glfw3.h>
+#include "Charactor.hpp"
 #include "Monitor.hpp"
 #include "Window.hpp"
+#include <GLFW/glfw3.h>
+#include <exception>
 
 class GLFWManager {
   public:
@@ -23,6 +24,8 @@ class System {
 
     MonitorManager monitorManager;
 
+    Charactor charactor;
+
     void updateCursourPos() {
         cursorPos = mainWindow.getCursorPos() + mainWindow.getWindowPos();
     }
@@ -33,8 +36,15 @@ class System {
         mainWindow.update();
         updateCursourPos();
 
+        charactor.update();
+
+        // start render
         mainWindow.renderBegin();
+
+        charactor.draw();
+
         mainWindow.renderEnd();
+        // end render
     }
     auto getCursorPos() const { return cursorPos; }
 
