@@ -35,7 +35,7 @@ class Window {
         wPos = tmpWPos;
         
         Vec2<int> tmpWSize;
-        glfwGetWindowPos(window, &tmpWSize.x, &tmpWSize.y);
+        glfwGetWindowSize(window, &tmpWSize.x, &tmpWSize.y);
         wSize = tmpWSize;
     }
 
