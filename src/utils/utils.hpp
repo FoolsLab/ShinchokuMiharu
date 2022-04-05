@@ -5,11 +5,10 @@ template <class T> struct Vec2 {
 
     Vec2() : x(0), y(0) {}
     Vec2(T _x, T _y) : x(_x), y(_y) {}
-    template <class T2> Vec2<T> &operator=(const Vec2<T2> &o) {
+    template <class T2> Vec2(const Vec2<T2> &o) {
         x = T(o.x);
         y = T(o.y);
     }
-    template <class T2> Vec2(const Vec2<T2> &o) { (*this) = o; }
 
     template <class T2> auto &operator+=(const Vec2<T2> &o) {
         x += o.x;
