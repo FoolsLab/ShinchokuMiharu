@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector>
-#include <exception>
-#include <GLFW/glfw3.h>
 #include "utils/utils.hpp"
+#include <GLFW/glfw3.h>
+#include <exception>
+#include <vector>
 
 struct Monitor {
     Point origin;
