@@ -1,8 +1,8 @@
 #pragma once
 
-#include <exception>
-#include <GLFW/glfw3.h>
 #include "utils/utils.hpp"
+#include <GLFW/glfw3.h>
+#include <exception>
 
 class Window {
     GLFWwindow *window;
@@ -11,10 +11,21 @@ class Window {
 
   public:
     Window() {
+        glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+        glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
         window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
         if (!window) {
             throw std::exception("Window creation error");
         }
+
+        glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
+        glfwMakeContextCurrent(window);
+        glfwDefaultWindowHints();
+        glfwShowWindow(window);
+
+        glfwDefaultWindowHints();
     }
 
     bool CloseRequested() { return glfwWindowShouldClose(window) != 0; }
