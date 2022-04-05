@@ -2,8 +2,8 @@
 #include <gl/GL.h>
 #include <stb_image.h>
 
-#include <vector>
 #include "utils/utils.hpp"
+#include <vector>
 
 struct Monitor {
     Point origin;
@@ -14,6 +14,7 @@ struct Monitor {
                origin.y <= pos.y && pos.y < origin.y + size.y;
     }
 
+    Monitor() {}
     Monitor(GLFWmonitor *glfwMonitor) {
         const GLFWvidmode *videoMode = glfwGetVideoMode(glfwMonitor);
         size.x = videoMode->width;
