@@ -4,7 +4,7 @@
 int main(void) {
     try {
         System sys;
-        Charactor charactor;
+        Charactor charactor(&sys.getWindow());
 
         while (!sys.shouldExit()) {
             sys.update();
