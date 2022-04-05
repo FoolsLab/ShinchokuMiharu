@@ -27,8 +27,8 @@ Texture::Texture(std::string path, GLint filter) {
 
 Texture::~Texture() { glDeleteTextures(1, &this->texName); }
 
-void Texture::Draw(const Point dst) { this->Draw(dst, {0, 0}, size); }
-void Texture::Draw(const Point dst, const Point src, const Size srcRect) {
+void Texture::Draw(const Window* window, const Point dst) { this->Draw(window, dst, {0, 0}, size); }
+void Texture::Draw(const Window* window, const Point dst, const Point src, const Size srcRect) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -39,7 +39,7 @@ void Texture::Draw(const Point dst, const Point src, const Size srcRect) {
 
     glLoadIdentity();
 
-    Size wSize(640, 480);
+    Size wSize = window->getWindowSize();
 
     glTranslatef(-1.0f, 1.0f, 0.0f);
     glScalef(size.x / wSize.x, size.y / wSize.y, 1.0f);

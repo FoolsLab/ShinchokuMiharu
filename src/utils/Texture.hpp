@@ -1,6 +1,7 @@
 #pragma once
 
-#include "./utils.hpp"
+#include "../common/Vec.hpp"
+#include "../common/Window.hpp"
 #include <GLFW/glfw3.h>
 #include <string>
 
@@ -13,6 +14,6 @@ class Texture {
     Texture(std::string path, GLint filter = GL_LINEAR);
     ~Texture();
 
-    void Draw(const Point dst);
-    void Draw(const Point dst, const Point src, const Size srcRect);
+    void Draw(const Window* window, const Point dst);
+    void Draw(const Window* window, const Point dst, const Point src, const Size srcRect);
 };
