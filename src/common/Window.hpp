@@ -8,14 +8,15 @@ class Window {
     GLFWwindow *window;
 
     Point wPos;
+    Size wSize;
 
   public:
-    Window() {
+    Window(Size _wSize = {640, 480}) : wSize(_wSize) {
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
         glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
-        window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+        window = glfwCreateWindow(wSize.x, wSize.y, "Hello World", NULL, NULL);
         if (!window) {
             throw std::exception("Window creation error");
         }
@@ -32,6 +33,10 @@ class Window {
         Vec2<int> tmpWPos;
         glfwGetWindowPos(window, &tmpWPos.x, &tmpWPos.y);
         wPos = tmpWPos;
+        
+        Vec2<int> tmpWSize;
+        glfwGetWindowPos(window, &tmpWSize.x, &tmpWSize.y);
+        wSize = tmpWSize;
     }
 
     auto getCursorPos() const {
@@ -46,6 +51,12 @@ class Window {
         wPos = newPos;
     }
     auto getWindowPos() const { return wPos; }
+    
+    void setWindowSize(Size newSize) {
+        glfwSetWindowSize(window, newSize.x, newSize.y);
+        wSize = newSize;
+    }
+    auto getWindowSize() const { return wSize; }
 
     void renderBegin() const {
         glfwMakeContextCurrent(window);
