@@ -13,5 +13,5 @@ void Charactor::draw() {
     glClearColor(0, 0, 0, 0.5);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    tex1.Draw({100, 150});
+    tex1.Draw(mainWindow, {100, 150});
 }

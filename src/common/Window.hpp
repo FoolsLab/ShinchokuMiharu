@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utils/utils.hpp"
+#include "Vec.hpp"
 #include <GLFW/glfw3.h>
 #include <exception>
 
