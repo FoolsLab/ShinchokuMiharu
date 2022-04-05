@@ -24,8 +24,6 @@ class Window {
         glfwMakeContextCurrent(window);
         glfwDefaultWindowHints();
         glfwShowWindow(window);
-
-        glfwDefaultWindowHints();
     }
 
     bool CloseRequested() { return glfwWindowShouldClose(window) != 0; }
