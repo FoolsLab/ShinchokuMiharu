@@ -2,6 +2,7 @@
 
 set (SRC_FILES 
 	"main.cpp"
+	"Charactor.cpp"
 )
 
 add_executable (Miharu ${SRC_FILES})
