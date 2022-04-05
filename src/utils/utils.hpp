@@ -1,3 +1,5 @@
+#pragma once
+
 template <class T> struct Vec2 {
     T x, y;
     bool operator==(Vec2 &o) const { return x == o.x && y == o.y; }
