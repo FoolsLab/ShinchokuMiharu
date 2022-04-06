@@ -16,11 +16,13 @@ void Charactor::setWindowSize(Size size) {
     glViewport(0, 0, size.x, size.y);
 }
 
-void Charactor::update() {}
+void Charactor::update() {
+    auto context = mainWindow->renderBegin();
 
-void Charactor::draw() {
     glClearColor(0, 0, 0, 0.5);
     glClear(GL_COLOR_BUFFER_BIT);
 
     tex1.Draw(mainWindow, {100, 150});
 }
+
+void Charactor::draw() {}
