@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RenderContext.hpp"
 #include "Vec.hpp"
 #include <GLFW/glfw3.h>
 #include <exception>
@@ -59,9 +60,11 @@ class Window {
         return Size(tmpWSize);
     }
 
-    void renderBegin() const {
+    [[nodiscard]] auto renderBegin() const {
         glfwMakeContextCurrent(window);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        return RenderContext(
+            [window = this->window]() { glfwSwapBuffers(window); });
     }
-    void renderEnd() const { glfwSwapBuffers(window); }
 };

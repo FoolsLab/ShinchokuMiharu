@@ -8,11 +8,7 @@ int main(void) {
 
         while (!sys.shouldExit()) {
             sys.update();
-
             charactor.update();
-            sys.getWindow().renderBegin();
-            charactor.draw();
-            sys.getWindow().renderEnd();
         }
     } catch (std::exception e) {
         std::cerr << e.what() << std::endl;
