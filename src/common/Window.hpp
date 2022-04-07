@@ -62,7 +62,6 @@ class Window {
 
     [[nodiscard]] auto renderBegin() const {
         glfwMakeContextCurrent(window);
-        glClear(GL_COLOR_BUFFER_BIT);
 
         return RenderContext(
             wSize, [window = this->window]() { glfwSwapBuffers(window); });
