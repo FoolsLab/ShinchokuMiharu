@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Texture.hpp"
 #include <utility>
 
 template <class FTEndCallback> class RenderContext {
