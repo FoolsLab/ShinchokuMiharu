@@ -13,6 +13,6 @@ class Texture {
     Texture(std::string path, GLint filter = GL_LINEAR);
     ~Texture();
 
-    void Draw(const Size vpSize, const Point dst);
-    void Draw(const Size vpSize, const Point dst, const Point src, const Size srcRect);
+    void Draw(const Size vpSize, const Point dst) const;
+    void Draw(const Size vpSize, const Point dst, const Point src, const Size srcRect) const;
 };
