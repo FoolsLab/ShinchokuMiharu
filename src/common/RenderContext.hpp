@@ -10,7 +10,8 @@ template <class FTEndCallback> class RenderContext {
 
   public:
     RenderContext(Size viewportSize, FTEndCallback callback)
-        : viewportSize(viewportSize), endCB(std::move(callback)), invalid(false) {}
+        : viewportSize(viewportSize), endCB(std::move(callback)),
+          invalid(false) {}
     RenderContext(RenderContext &&c)
         : endCB(std::move(c.endCB)), invalid(c.invalid) {
         c.invalid = true;
@@ -20,5 +21,11 @@ template <class FTEndCallback> class RenderContext {
             endCB();
             invalid = true;
         }
+    }
+
+    void Draw(const Texture &tex, Point dstPos) { tex.Draw(dstPos); }
+    void Draw(const Texture &tex, const Point dstPos, const Point srcPos,
+              const Size srcRect) {
+        tex.Draw(dstPos, srcPos, srcRect);
     }
 };
