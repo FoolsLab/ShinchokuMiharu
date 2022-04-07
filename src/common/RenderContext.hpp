@@ -6,10 +6,11 @@
 template <class FTEndCallback> class RenderContext {
     FTEndCallback endCB;
     bool invalid;
+    Size viewportSize;
 
   public:
-    RenderContext(FTEndCallback callback)
-        : endCB(std::move(callback)), invalid(false) {}
+    RenderContext(Size viewportSize, FTEndCallback callback)
+        : viewportSize(viewportSize), endCB(std::move(callback)), invalid(false) {}
     RenderContext(RenderContext &&c)
         : endCB(std::move(c.endCB)), invalid(c.invalid) {
         c.invalid = true;

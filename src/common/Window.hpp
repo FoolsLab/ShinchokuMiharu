@@ -65,6 +65,6 @@ class Window {
         glClear(GL_COLOR_BUFFER_BIT);
 
         return RenderContext(
-            [window = this->window]() { glfwSwapBuffers(window); });
+            wSize, [window = this->window]() { glfwSwapBuffers(window); });
     }
 };

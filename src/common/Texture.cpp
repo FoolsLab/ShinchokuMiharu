@@ -27,8 +27,8 @@ Texture::Texture(std::string path, GLint filter) {
 
 Texture::~Texture() { glDeleteTextures(1, &this->texName); }
 
-void Texture::Draw(const Size vpSize, const Point dst) { this->Draw(vpSize, dst, {0, 0}, size); }
-void Texture::Draw(const Size vpSize, const Point dst, const Point src, const Size srcRect) {
+void Texture::Draw(const Size vpSize, const Point dst) const { this->Draw(vpSize, dst, {0, 0}, size); }
+void Texture::Draw(const Size vpSize, const Point dst, const Point src, const Size srcRect) const {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
