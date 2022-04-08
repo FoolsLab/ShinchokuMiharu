@@ -17,5 +17,4 @@ class Charactor {
     ~Charactor();
 
     void update();
-    void draw();
 };
