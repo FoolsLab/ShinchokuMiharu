@@ -22,7 +22,7 @@ void Charactor::update() {
     glClearColor(0, 0, 0, 0.5);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    tex1.Draw({512, 512}, {100, 150});
+    context.Draw(tex1, {150, 100});
 }
 
 void Charactor::draw() {}
