@@ -1,18 +1,19 @@
 #pragma once
 
-#include "common/Window.hpp"
 #include "common/Texture.hpp"
+#include "common/Window.hpp"
 #include <memory>
 
 class Charactor {
   private:
-    const Window *mainWindow;
+    Window *const mainWindow;
     Texture tex1;
 
     void setWindowPos(Point);
     void setWindowSize(Size);
+
   public:
-    Charactor(const Window *_mainWindow);
+    Charactor(Window *const _mainWindow);
     ~Charactor();
 
     void update();
