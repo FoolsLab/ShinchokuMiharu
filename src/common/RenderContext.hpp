@@ -23,9 +23,11 @@ template <class FTEndCallback> class RenderContext {
         }
     }
 
-    void Draw(const Texture &tex, Point dstPos) { tex.Draw(dstPos); }
+    void Draw(const Texture &tex, Point dstPos) const {
+        tex.Draw(viewportSize, dstPos);
+    }
     void Draw(const Texture &tex, const Point dstPos, const Point srcPos,
-              const Size srcRect) {
-        tex.Draw(dstPos, srcPos, srcRect);
+              const Size srcRect) const {
+        tex.Draw(viewportSize, dstPos, srcPos, srcRect);
     }
 };
