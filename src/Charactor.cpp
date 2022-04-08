@@ -24,5 +24,3 @@ void Charactor::update() {
 
     context.Draw(tex1, {150, 100});
 }
-
-void Charactor::draw() {}
