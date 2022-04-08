@@ -35,9 +35,9 @@ class System {
         updateCursourPos();
     }
     auto getCursorPos() const { return cursorPos; }
-    auto& getWindow() const { return mainWindow; }
+    auto& getWindow() { return mainWindow; }
 
-    bool shouldExit() { return mainWindow.CloseRequested(); }
+    bool shouldExit() const { return mainWindow.CloseRequested(); }
 
     System() {}
     ~System() {}

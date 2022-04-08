@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <gl/GL.h>
 
-Charactor::Charactor(const Window *_mainWindow)
+Charactor::Charactor(Window *const _mainWindow)
     : mainWindow(_mainWindow), tex1("./assets/test.png") {
     setWindowSize({512, 512});
 }
