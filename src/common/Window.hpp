@@ -42,8 +42,9 @@ class Window {
         return Point(tmpCPos);
     }
 
-    void setWindowPos(Point newPos) const {
+    void setWindowPos(Point newPos) {
         glfwSetWindowPos(window, newPos.x, newPos.y);
+        wPos = newPos;
     }
     Point getWindowPos() const {
         Vec2<int> tmpWPos;
@@ -51,8 +52,9 @@ class Window {
         return Point(tmpWPos);
     }
 
-    void setWindowSize(Size newSize) const {
+    void setWindowSize(Size newSize) {
         glfwSetWindowSize(window, newSize.x, newSize.y);
+        wSize = newSize;
     }
     Size getWindowSize() const {
         Vec2<int> tmpWSize;
