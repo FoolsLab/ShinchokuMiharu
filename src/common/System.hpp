@@ -24,7 +24,7 @@ class System {
 
     MonitorManager monitorManager;
 
-    void updateCursourPos() {
+    void updateCursorPos() {
         cursorPos = mainWindow.getCursorPos() + mainWindow.getWindowPos();
     }
 
@@ -32,7 +32,7 @@ class System {
     void update() {
         glfwManager.update();
         mainWindow.update();
-        updateCursourPos();
+        updateCursorPos();
     }
     auto getCursorPos() const { return cursorPos; }
     auto& getWindow() { return mainWindow; }
