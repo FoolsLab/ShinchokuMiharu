@@ -1,7 +1,7 @@
 #pragma once
 
-#include "common/Texture.hpp"
-#include "common/Window.hpp"
+#include "../sys/Texture.hpp"
+#include "../sys/Window.hpp"
 #include <memory>
 
 class Charactor {

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Charactor.hpp"
 #include "Monitor.hpp"
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
