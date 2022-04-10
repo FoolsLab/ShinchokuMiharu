@@ -1,5 +1,6 @@
 ﻿#include <iostream>
-#include "common/System.hpp"
+#include "app/Charactor.hpp"
+#include "sys/System.hpp"
 
 int main(void) {
     try {
