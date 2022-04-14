@@ -61,6 +61,7 @@ class Window : public IWindow {
 
         glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
         glfwMakeContextCurrent(window);
+        glfwSwapInterval(1);
         glfwDefaultWindowHints();
         glfwShowWindow(window);
     }
