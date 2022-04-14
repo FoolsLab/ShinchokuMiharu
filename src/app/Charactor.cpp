@@ -2,8 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <gl/GL.h>
 
-Charactor::Charactor(IWindow& _mainWindow)
-    : mainWindow(_mainWindow), tex1("./assets/test.png") {
+Charactor::Charactor(IWindow& _mainWindow, const ICursor& _cursor)
+    : mainWindow(_mainWindow), cursor(_cursor), tex1("./assets/test.png") {
     setWindowSize({512, 512});
 }
 
@@ -22,5 +22,5 @@ void Charactor::update() {
     glClearColor(0, 0, 0, 0.5);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    context->Draw(tex1, {150, 100});
+    context->Draw(tex1, cursor.getPos());
 }

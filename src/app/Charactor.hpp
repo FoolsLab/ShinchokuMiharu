@@ -24,6 +24,11 @@ class IWindow {
     [[nodiscard]] virtual std::unique_ptr<IRenderContext> renderBegin() const = 0;
 };
 
+class ICursor {
+  public:
+    virtual Point getPos() const = 0;
+};
+
 // struct Monitor {
 //     Point origin;
 //     Size size;
@@ -44,15 +49,15 @@ class IWindow {
 class Charactor {
   private:
     IWindow& mainWindow;
+    const ICursor& cursor;
     // IMonitorManager& monitors;
-    // IWindow& mainWindow;
     Texture tex1;
 
     void setWindowPos(Point);
     void setWindowSize(Size);
 
   public:
-    Charactor(IWindow& _mainWindow);
+    Charactor(IWindow& _mainWindow, const ICursor& _cursor);
     ~Charactor();
 
     void update();

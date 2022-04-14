@@ -26,6 +26,21 @@ class System {
     void updateCursorPos() {
         cursorPos = mainWindow.getCursorPos() + mainWindow.getWindowPos();
     }
+    auto getCursorPos() const { return cursorPos; }
+
+  public:
+    class Cursor : public ICursor {
+        System& sys;
+
+      public:
+        Cursor(System& _sys) : sys(_sys) {}
+        Cursor(Cursor&) = delete;
+        Cursor(Cursor&&) = delete;
+        Point getPos() const override { return sys.getCursorPos(); }
+    };
+
+  private:
+    Cursor cursor;
 
   public:
     void update() {
@@ -33,11 +48,11 @@ class System {
         mainWindow.update();
         updateCursorPos();
     }
-    auto getCursorPos() const { return cursorPos; }
+    auto& getCursor() const { return cursor; }
     auto& getWindow() { return mainWindow; }
 
     bool shouldExit() const { return mainWindow.CloseRequested(); }
 
-    System() {}
+    System() : cursor(*this) {}
     ~System() {}
 };
