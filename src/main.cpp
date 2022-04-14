@@ -5,7 +5,7 @@
 int main(void) {
     try {
         System sys;
-        Charactor charactor(&sys.getWindow());
+        Charactor charactor(sys.getWindow());
 
         while (!sys.shouldExit()) {
             sys.update();

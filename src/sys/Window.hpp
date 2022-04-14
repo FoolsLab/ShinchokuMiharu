@@ -1,11 +1,48 @@
 #pragma once
 
-#include "RenderContext.hpp"
+#include "../app/Charactor.hpp"
 #include "../common/Vec.hpp"
 #include <GLFW/glfw3.h>
 #include <exception>
 
-class Window {
+class WindowRenderContext : public IRenderContext {
+    bool invalid;
+    Size viewportSize;
+    GLFWwindow *window;
+
+    void procRenderBegin() {
+        glfwMakeContextCurrent(window);
+    }
+    void procRenderEnd() {
+        glfwSwapBuffers(window);
+    }
+
+  public:
+    WindowRenderContext(Size viewportSize, GLFWwindow *window)
+        : viewportSize(viewportSize), window(window), invalid(false) {
+        procRenderBegin();
+    }
+    WindowRenderContext(WindowRenderContext&& c)
+        : viewportSize(c.viewportSize), window(c.window), invalid(c.invalid) {
+        c.invalid = true;
+    }
+    ~WindowRenderContext() override {
+        if (!invalid) {
+            procRenderEnd();
+            invalid = true;
+        }
+    }
+
+    void Draw(const Texture& tex, Point dstPos) const override {
+        tex.Draw(viewportSize, dstPos);
+    }
+    void Draw(const Texture& tex, const Point dstPos, const Point srcPos,
+              const Size srcRect) const override {
+        tex.Draw(viewportSize, dstPos, srcPos, srcRect);
+    }
+};
+
+class Window : public IWindow {
     GLFWwindow *window;
 
     Point wPos;
@@ -28,7 +65,9 @@ class Window {
         glfwShowWindow(window);
     }
 
-    bool CloseRequested() const { return glfwWindowShouldClose(window) != 0; }
+    bool CloseRequested() const override {
+        return glfwWindowShouldClose(window) != 0;
+    }
 
     void update() {
         wPos = getWindowPos();
@@ -42,30 +81,27 @@ class Window {
         return Point(tmpCPos);
     }
 
-    void setWindowPos(Point newPos) {
+    void setWindowPos(Point newPos) override {
         glfwSetWindowPos(window, newPos.x, newPos.y);
         wPos = newPos;
     }
-    Point getWindowPos() const {
+    Point getWindowPos() const override {
         Vec2<int> tmpWPos;
         glfwGetWindowPos(window, &tmpWPos.x, &tmpWPos.y);
         return Point(tmpWPos);
     }
 
-    void setWindowSize(Size newSize) {
+    void setWindowSize(Size newSize) override {
         glfwSetWindowSize(window, newSize.x, newSize.y);
         wSize = newSize;
     }
-    Size getWindowSize() const {
+    Size getWindowSize() const override {
         Vec2<int> tmpWSize;
         glfwGetWindowSize(window, &tmpWSize.x, &tmpWSize.y);
         return Size(tmpWSize);
     }
 
-    [[nodiscard]] auto renderBegin() const {
-        glfwMakeContextCurrent(window);
-
-        return RenderContext(
-            wSize, [window = this->window]() { glfwSwapBuffers(window); });
+    [[nodiscard]] std::unique_ptr<IRenderContext> renderBegin() const override {
+        return std::make_unique<WindowRenderContext>(wSize, window);
     }
 };

@@ -1,19 +1,58 @@
 #pragma once
 
 #include "../sys/Texture.hpp"
-#include "../sys/Window.hpp"
 #include <memory>
+
+class IRenderContext {
+  public:
+    virtual void Draw(const Texture& tex, Point dstPos) const = 0;
+    virtual void Draw(const Texture& tex, const Point dstPos,
+                      const Point srcPos, const Size srcRect) const = 0;
+    virtual ~IRenderContext() {};
+};
+
+class IWindow {
+  public:
+    virtual bool CloseRequested() const = 0;
+
+    virtual void setWindowPos(Point newPos) = 0;
+    virtual Point getWindowPos() const = 0;
+
+    virtual void setWindowSize(Size newSize) = 0;
+    virtual Size getWindowSize() const = 0;
+
+    [[nodiscard]] virtual std::unique_ptr<IRenderContext> renderBegin() const = 0;
+};
+
+// struct Monitor {
+//     Point origin;
+//     Size size;
+//     Scale scale;
+//     bool isCoordInMonitor(const Point pos) const;
+// };
+
+// class IMonitorManager {
+//   public:
+//     [[nodiscard]] virtual int
+//     getMonitorIndexFromCoord(const Point pos) const = 0;
+//     [[nodiscard]] virtual Monitor&
+//     getMonitorFromCoord(const Point pos) const = 0;
+//     [[nodiscard]] virtual size_t getMonitorNum() const = 0;
+//     [[nodiscard]] virtual Monitor& getMonitor(const size_t index) const = 0;
+// };
 
 class Charactor {
   private:
-    Window *const mainWindow;
+    IWindow& mainWindow;
+    // IMonitorManager& monitors;
+    // IWindow& mainWindow;
     Texture tex1;
 
     void setWindowPos(Point);
     void setWindowSize(Size);
 
   public:
-    Charactor(Window *const _mainWindow);
+    Charactor(IWindow& _mainWindow);
     ~Charactor();
 
     void update();
