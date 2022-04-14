@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../sys/Texture.hpp"
+#include <concepts>
 #include <memory>
 
 class IRenderContext {
@@ -8,9 +9,11 @@ class IRenderContext {
     virtual void Draw(const Texture& tex, Point dstPos) const = 0;
     virtual void Draw(const Texture& tex, const Point dstPos,
                       const Point srcPos, const Size srcRect) const = 0;
-    virtual ~IRenderContext() {};
+    virtual ~IRenderContext(){};
 };
 
+template <class TRenderContext>
+requires std::derived_from<TRenderContext, IRenderContext>
 class IWindow {
   public:
     virtual bool CloseRequested() const = 0;
@@ -21,7 +24,7 @@ class IWindow {
     virtual void setWindowSize(Size newSize) = 0;
     virtual Size getWindowSize() const = 0;
 
-    [[nodiscard]] virtual std::unique_ptr<IRenderContext> renderBegin() const = 0;
+    [[nodiscard]] virtual TRenderContext renderBegin() const = 0;
 };
 
 // struct Monitor {
@@ -41,19 +44,32 @@ class IWindow {
 //     [[nodiscard]] virtual Monitor& getMonitor(const size_t index) const = 0;
 // };
 
-class Charactor {
+template <class T> class Charactor {
   private:
-    IWindow& mainWindow;
+    IWindow<T>& mainWindow;
     // IMonitorManager& monitors;
     // IWindow& mainWindow;
     Texture tex1;
 
-    void setWindowPos(Point);
-    void setWindowSize(Size);
+    void setWindowPos(Point pos) { mainWindow.setWindowPos(pos); };
+    void setWindowSize(Size size) {
+        mainWindow.setWindowSize(size);
+        glViewport(0, 0, size.x, size.y);
+    };
 
   public:
-    Charactor(IWindow& _mainWindow);
-    ~Charactor();
+    Charactor(IWindow<T>& _mainWindow)
+        : mainWindow(_mainWindow), tex1("./assets/test.png") {
+        setWindowSize({512, 512});
+    }
+    ~Charactor(){};
 
-    void update();
+    void update() {
+        auto context = mainWindow.renderBegin();
+
+        glClearColor(0, 0, 0, 0.5);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        context.Draw(tex1, {150, 100});
+    };
 };

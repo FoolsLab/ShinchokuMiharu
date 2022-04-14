@@ -42,7 +42,7 @@ class WindowRenderContext : public IRenderContext {
     }
 };
 
-class Window : public IWindow {
+class Window : public IWindow<WindowRenderContext> {
     GLFWwindow *window;
 
     Point wPos;
@@ -102,7 +102,7 @@ class Window : public IWindow {
         return Size(tmpWSize);
     }
 
-    [[nodiscard]] std::unique_ptr<IRenderContext> renderBegin() const override {
-        return std::make_unique<WindowRenderContext>(wSize, window);
+    [[nodiscard]] WindowRenderContext renderBegin() const override {
+        return WindowRenderContext(wSize, window);
     }
 };
