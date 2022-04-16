@@ -5,16 +5,15 @@
 #include <exception>
 #include <vector>
 
-struct Monitor {
+struct Monitor : public IMonitor {
     Point origin;
     Size size;
     Scale scale;
-    bool isCoordInMonitor(const Point pos) const {
+    bool isCoordInMonitor(const Point pos) const override {
         return origin.x <= pos.x && pos.x < origin.x + size.x &&
                origin.y <= pos.y && pos.y < origin.y + size.y;
     }
 
-    Monitor() {}
     Monitor(GLFWmonitor *glfwMonitor) {
         const GLFWvidmode *videoMode = glfwGetVideoMode(glfwMonitor);
         size.x = videoMode->width;
@@ -30,20 +29,19 @@ struct Monitor {
     }
 };
 
-class MonitorManager {
+class MonitorManager : public IMonitorManager {
     std::vector<Monitor> monitors;
 
   public:
     void update() {
         int count;
         auto pMonitors = glfwGetMonitors(&count);
-        monitors.resize(count);
         for (size_t i = 0; i < count; i++) {
-            monitors[i] = Monitor(pMonitors[i]);
+            monitors.emplace_back(pMonitors[i]);
         }
     }
 
-    int getMonitorIndexFromCoord(const Point pos) const {
+    int getMonitorIndexFromCoord(const Point pos) const override {
         for (int i = 0; const auto &monitor : monitors) {
             if (monitor.isCoordInMonitor(pos)) {
                 return i;
@@ -52,12 +50,13 @@ class MonitorManager {
         }
         return -1;
     }
-    auto getMonitorFromCoord(const Point pos) const {
+    const IMonitor& getMonitorFromCoord(const Point pos) const override {
         int index = getMonitorIndexFromCoord(pos);
         if (index == -1) {
             throw std::exception("monitor get error");
         }
         return monitors[index];
     }
-    auto getMonitor(const size_t index) const { return monitors[index]; }
+    size_t getMonitorNum() const override { return monitors.size(); }
+    const IMonitor& getMonitor(const size_t index) const override { return monitors[index]; }
 };
