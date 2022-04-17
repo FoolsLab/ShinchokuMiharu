@@ -45,6 +45,7 @@ class System {
   public:
     void update() {
         glfwManager.update();
+        monitorManager.update();
         mainWindow.update();
         updateCursorPos();
     }

@@ -30,6 +30,7 @@ class ICursor {
 };
 
 class IMonitor {
+  public:
     virtual bool isCoordInMonitor(const Point pos) const = 0;
 };
 

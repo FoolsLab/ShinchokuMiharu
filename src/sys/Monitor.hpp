@@ -1,9 +1,12 @@
 #pragma once
 
 #include "../common/Vec.hpp"
+#include "../app/Charactor.hpp"
 #include <GLFW/glfw3.h>
 #include <exception>
+#include <mutex>
 #include <vector>
+#include <unordered_set>
 
 struct Monitor : public IMonitor {
     Point origin;
@@ -31,13 +34,60 @@ struct Monitor : public IMonitor {
 
 class MonitorManager : public IMonitorManager {
     std::vector<Monitor> monitors;
+    bool invalid;
+    static std::vector<Monitor> latestMonitorsInfo;
+    static std::unordered_set<MonitorManager*> objList;
 
-  public:
-    void update() {
+    static std::mutex mtx;
+
+    static void updateMonitorInfoGlobal(){
+        std::lock_guard<std::mutex> lock(mtx);
+
         int count;
         auto pMonitors = glfwGetMonitors(&count);
+
+        latestMonitorsInfo.clear();
         for (size_t i = 0; i < count; i++) {
-            monitors.emplace_back(pMonitors[i]);
+            latestMonitorsInfo.emplace_back(pMonitors[i]);
+        }
+        for(auto& obj : objList){
+            obj->invalid = true;
+        }
+    }
+    static void monitorCallback(GLFWmonitor* monitor, int event){
+        updateMonitorInfoGlobal();
+    }
+  public:
+    MonitorManager(){
+        bool needGlobalUpdate = false;
+        {
+            std::lock_guard<std::mutex> lock(mtx);
+            if(objList.empty()){
+                glfwSetMonitorCallback(monitorCallback);
+                objList.insert(this);
+                needGlobalUpdate = true;
+            }else{
+                objList.insert(this);
+            }
+        }
+        if(needGlobalUpdate){
+            updateMonitorInfoGlobal();
+        }
+        update();
+    }
+    ~MonitorManager(){
+        std::lock_guard<std::mutex> lock(mtx);
+        objList.erase(this);
+        if(objList.empty()){
+            glfwSetMonitorCallback(NULL);
+        }
+    }
+
+    void update() {
+        if(this->invalid){
+            std::lock_guard<std::mutex> lock(mtx);
+            monitors = latestMonitorsInfo;
+            this->invalid = false;
         }
     }
 
