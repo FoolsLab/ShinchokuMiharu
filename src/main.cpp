@@ -5,7 +5,7 @@
 int main(void) {
     try {
         System sys;
-        Charactor charactor(sys.getWindow(), sys.getCursor());
+        Charactor charactor(sys.getWindow(), sys.getCursor(), sys.getMonitorManager());
 
         while (!sys.shouldExit()) {
             sys.update();

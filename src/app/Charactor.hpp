@@ -46,14 +46,14 @@ class Charactor {
   private:
     IWindow& mainWindow;
     const ICursor& cursor;
-    // IMonitorManager& monitors;
+    const IMonitorManager& monitors;
     Texture tex1;
 
     void setWindowPos(Point);
     void setWindowSize(Size);
 
   public:
-    Charactor(IWindow& _mainWindow, const ICursor& _cursor);
+    Charactor(IWindow& _mainWindow, const ICursor& _cursor, const IMonitorManager& _monitorManager);
     ~Charactor();
 
     void update();

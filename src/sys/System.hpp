@@ -51,6 +51,7 @@ class System {
     }
     auto& getCursor() const { return cursor; }
     auto& getWindow() { return mainWindow; }
+    auto& getMonitorManager() { return monitorManager; }
 
     bool shouldExit() const { return mainWindow.CloseRequested(); }
 

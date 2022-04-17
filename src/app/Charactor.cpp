@@ -2,8 +2,9 @@
 #include <GLFW/glfw3.h>
 #include <gl/GL.h>
 
-Charactor::Charactor(IWindow& _mainWindow, const ICursor& _cursor)
-    : mainWindow(_mainWindow), cursor(_cursor), tex1("./assets/test.png") {
+Charactor::Charactor(IWindow& _mainWindow, const ICursor& _cursor, const IMonitorManager& _monitorManager)
+    : mainWindow(_mainWindow), cursor(_cursor), monitors(_monitorManager),
+      tex1("./assets/test.png") {
     setWindowSize({512, 512});
 }
 
