@@ -47,7 +47,7 @@ class Charactor {
     IWindow& mainWindow;
     const ICursor& cursor;
     const IMonitorManager& monitors;
-    Texture tex1;
+    Texture tex1, font1, font2;
 
     void setWindowPos(Point);
     void setWindowSize(Size);

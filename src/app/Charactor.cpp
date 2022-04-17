@@ -4,7 +4,9 @@
 
 Charactor::Charactor(IWindow& _mainWindow, const ICursor& _cursor, const IMonitorManager& _monitorManager)
     : mainWindow(_mainWindow), cursor(_cursor), monitors(_monitorManager),
-      tex1("./assets/test.png") {
+      tex1("./assets/test.png"),
+      font1("./assets/k8x12_jisx0201.png"),
+      font2("./assets/k8x12_jisx0208.png") {
     setWindowSize({512, 512});
 }
 
