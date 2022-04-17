@@ -15,4 +15,5 @@ class Texture {
 
     void Draw(const Size vpSize, const Point dst) const;
     void Draw(const Size vpSize, const Point dst, const Point src, const Size srcRect) const;
+    void Draw(const Size vpSize, const Point dst, const Point src, const Size srcRect, float scale) const;
 };

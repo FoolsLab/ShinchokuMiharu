@@ -8,6 +8,9 @@ class IRenderContext {
     virtual void Draw(const Texture& tex, Point dstPos) const = 0;
     virtual void Draw(const Texture& tex, const Point dstPos,
                       const Point srcPos, const Size srcRect) const = 0;
+    virtual void Draw(const Texture& tex, const Point dstPos,
+                      const Point srcPos, const Size srcRect,
+                      float scale) const = 0;
     virtual ~IRenderContext() {};
 };
 

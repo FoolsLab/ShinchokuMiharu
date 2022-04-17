@@ -27,8 +27,15 @@ Texture::Texture(std::string path, GLint filter) {
 
 Texture::~Texture() { glDeleteTextures(1, &this->texName); }
 
-void Texture::Draw(const Size vpSize, const Point dst) const { this->Draw(vpSize, dst, {0, 0}, size); }
-void Texture::Draw(const Size vpSize, const Point dst, const Point src, const Size srcRect) const {
+void Texture::Draw(const Size vpSize, const Point dst) const {
+    this->Draw(vpSize, dst, {0, 0}, size);
+}
+void Texture::Draw(const Size vpSize, const Point dst, const Point src,
+                   const Size srcRect) const {
+    this->Draw(vpSize, dst, {0, 0}, size, 1.0f);
+}
+void Texture::Draw(const Size vpSize, const Point dst, const Point src,
+                   const Size srcRect, float scale) const {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -40,8 +47,9 @@ void Texture::Draw(const Size vpSize, const Point dst, const Point src, const Si
     glLoadIdentity();
 
     glTranslatef(-1.0f, 1.0f, 0.0f);
-    glScalef(size.x / vpSize.x, size.y / vpSize.y, 1.0f);
-    glTranslatef(1.0f + dst.x * 2 / size.x, -1.0f - dst.y * 2 / size.y, 0.0f);
+    glScalef(scale * size.x / vpSize.x, scale * size.y / vpSize.y, 1.0f);
+    glTranslatef(1.0f + dst.x * 2 / size.x / scale, -1.0f - dst.y * 2 / size.y / scale,
+                 0.0f);
     glVertexPointer(2, GL_FLOAT, 0, vertex);
     glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
 

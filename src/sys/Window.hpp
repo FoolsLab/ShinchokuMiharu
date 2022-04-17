@@ -40,6 +40,10 @@ class WindowRenderContext : public IRenderContext {
               const Size srcRect) const override {
         tex.Draw(viewportSize, dstPos, srcPos, srcRect);
     }
+    void Draw(const Texture& tex, const Point dstPos, const Point srcPos,
+              const Size srcRect, float scale) const override {
+        tex.Draw(viewportSize, dstPos, srcPos, srcRect, scale);
+    }
 };
 
 class Window : public IWindow {
