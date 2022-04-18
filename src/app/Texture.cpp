@@ -2,10 +2,11 @@
 #include <GLFW/glfw3.h>
 #include <gl/GL.h>
 #include <stb_image.h>
+#include <array>
 
-static const GLfloat vertex[] = {-1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0};
-static const GLfloat texCoord[] = {0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0};
-static const GLubyte indices[] = {0, 1, 2, 3};
+static const std::array<GLfloat, 8> vertex = {-1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0};
+static const std::array<GLfloat, 8> texCoord = {0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0};
+static const std::array<GLubyte, 8> indices = {0, 1, 2, 3};
 
 Texture::Texture(std::string path, GLint filter) {
     int width, height, bpp;
@@ -47,13 +48,20 @@ void Texture::Draw(const Size vpSize, const Point dst, const Point src,
     glLoadIdentity();
 
     glTranslatef(-1.0f, 1.0f, 0.0f);
-    glScalef(scale * size.x / vpSize.x, scale * size.y / vpSize.y, 1.0f);
-    glTranslatef(1.0f + dst.x * 2 / size.x / scale, -1.0f - dst.y * 2 / size.y / scale,
+    glScalef(scale * srcRect.x / vpSize.x, scale * srcRect.y / vpSize.y, 1.0f);
+    glTranslatef(1.0f + dst.x * 2 / srcRect.x / scale, -1.0f - dst.y * 2 / srcRect.y / scale,
                  0.0f);
-    glVertexPointer(2, GL_FLOAT, 0, vertex);
-    glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
 
-    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
+    auto tmpTexCoord = texCoord;
+    for(size_t i = 0; i < 4; i++){
+        tmpTexCoord[i * 2] = (src.x + tmpTexCoord[i * 2] * srcRect.x) / size.x;
+        tmpTexCoord[i * 2 + 1] = (src.y + tmpTexCoord[i * 2 + 1] * srcRect.y) / size.y;
+    }
+
+    glVertexPointer(2, GL_FLOAT, 0, vertex.data());
+    glTexCoordPointer(2, GL_FLOAT, 0, tmpTexCoord.data());
+
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices.data());
 
     glDisable(GL_TEXTURE);
     glDisable(GL_BLEND);
