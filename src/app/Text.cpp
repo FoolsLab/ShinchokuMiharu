@@ -19,6 +19,11 @@ bool MisakiFont::Draw(IRenderContext& ctx, Point pos, Size rect, float fontsize,
             cpos.x = pos.x;
             cpos.y += dispCSz.y;
         }
+        if(bytenum == 1 && str[i] == '\n'){
+            cpos.x = pos.x;
+            cpos.y += dispCSz.y;
+            continue;
+        }
 
         if (bytenum == 1) {
             int code = (unsigned char)str[i];
