@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../common/Vec.hpp"
-#include "../app/Charactor.hpp"
+#include "../app/SysInterface.hpp"
 #include <GLFW/glfw3.h>
 #include <exception>
 #include <mutex>

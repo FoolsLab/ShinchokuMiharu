@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../app/Charactor.hpp"
+#include "../app/SysInterface.hpp"
 #include "../common/Vec.hpp"
 #include <GLFW/glfw3.h>
 #include <exception>

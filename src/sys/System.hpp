@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../app/SysInterface.hpp"
 #include "Monitor.hpp"
 #include "Window.hpp"
 #include <GLFW/glfw3.h>
