@@ -3,7 +3,7 @@
 set (SRC_FILES 
 	"main.cpp"
 	"app/Charactor.cpp"
-	"sys/Texture.cpp"
+	"app/Texture.cpp"
 	"sys/Monitor.cpp"
 	"extra/stb_impl.cpp"
 )
