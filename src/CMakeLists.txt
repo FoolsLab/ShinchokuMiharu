@@ -4,6 +4,7 @@ set (SRC_FILES
 	"main.cpp"
 	"app/Charactor.cpp"
 	"app/Texture.cpp"
+	"app/Text.cpp"
 	"sys/Monitor.cpp"
 	"extra/stb_impl.cpp"
 )
